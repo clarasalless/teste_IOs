@@ -31,10 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define input19
-#define output19
-//#define input20
-//#define output20
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -88,21 +85,21 @@ int main(void)
   /* USER CODE BEGIN 2 */
   	CLKEnable(GPIOA);
 
-#ifdef input19
-  	inputTC(GPIOin, GPIO_PIN_in, GPIOout, GPIO_PIN_out);
-#endif
+  	char test = "input20";
 
-#ifdef output19
-  	outputTC(GPIOout, GPIO_PIN_out, EstadoLogico);
-#endif
-
-#ifdef input20
-  	testeInput(GPIOin, GPIO_PIN_in, GPIOout, GPIO_PIN_out);
-#endif
-
-#ifdef output20
-	testeOutput(GPIOout, GPIO_PIN_out);
-#endif
+  	switch(test){
+  		case "input19":
+  			inputTC(GPIOin, GPIO_PIN_in, GPIOout, GPIO_PIN_out);
+  			break;
+  		case "output19":
+  			outputTC(GPIOout, GPIO_PIN_out, EstadoLogico);
+  			break;
+  		case "input20":
+  			testeInput(GPIOin, GPIO_PIN_in, GPIOout, GPIO_PIN_out);
+  			break;
+  		case "output20":
+  			testeOutput(GPIOout, GPIO_PIN_out);
+  	}
 
   /* USER CODE END 2 */
 

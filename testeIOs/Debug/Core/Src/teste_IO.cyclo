@@ -1,0 +1,12 @@
+teste_IO.c:22:6:CLKEnable	6
+teste_IO.c:43:6:initOutput	1
+teste_IO.c:61:6:initInput	1
+teste_IO.c:71:6:DeInit	1
+teste_IO.c:75:15:read_pin	1
+teste_IO.c:79:6:write_pin	1
+teste_IO.c:83:6:toggle_pin	1
+teste_IO.c:87:6:delay	1
+teste_IO.c:101:6:inputTC	2
+teste_IO.c:127:6:outputTC	3
+teste_IO.c:153:6:testeInput	4
+teste_IO.c:181:6:testeOutput	2

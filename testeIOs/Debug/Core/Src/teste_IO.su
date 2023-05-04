@@ -1,5 +1,12 @@
-../Core/Src/teste_IO.c:4:6:CLKEnable	40	static
-../Core/Src/teste_IO.c:18:6:initOutput	40	static
-../Core/Src/teste_IO.c:29:6:initInput	40	static
-../Core/Src/teste_IO.c:39:6:testeInput	32	static
-../Core/Src/teste_IO.c:58:6:testeOutput	24	static
+../Core/Src/teste_IO.c:22:6:CLKEnable	40	static
+../Core/Src/teste_IO.c:43:6:initOutput	40	static
+../Core/Src/teste_IO.c:61:6:initInput	40	static
+../Core/Src/teste_IO.c:71:6:DeInit	16	static
+../Core/Src/teste_IO.c:75:15:read_pin	16	static
+../Core/Src/teste_IO.c:79:6:write_pin	16	static
+../Core/Src/teste_IO.c:83:6:toggle_pin	16	static
+../Core/Src/teste_IO.c:87:6:delay	16	static
+../Core/Src/teste_IO.c:101:6:inputTC	24	static
+../Core/Src/teste_IO.c:127:6:outputTC	24	static
+../Core/Src/teste_IO.c:153:6:testeInput	32	static
+../Core/Src/teste_IO.c:181:6:testeOutput	24	static

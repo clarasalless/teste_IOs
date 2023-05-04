@@ -69,6 +69,58 @@ void initInput(GPIO_TypeDef* GPIOin, uint16_t GPIO_Pin_in)
 }
 
 /**
+  * @brief  Deinicializa o pino do GPIO especificado.
+  * @param  GPIOx, onde x pode ser (A..F), para selecionar qual GPIO será utilizado.
+  * @param  GPIO_Pin especifica o pino a ser deinicializado.
+  * @retval None
+  */
+void DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin){
+	HAL_GPIO_DeInit(GPIOx,GPIO_Pin);
+}
+
+/**
+  * @brief  Realiza a leitura do pino de entrada especificado.
+  * @param  GPIOx, onde x pode ser (A..F), para selecionar qual GPIO será utilizado.
+  * @param  GPIO_Pin especifica o pino a ser lido.
+  * @retval O valor lido no pino de entrada.
+  */
+GPIO_PinState read_pin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin){
+	return HAL_GPIO_ReadPin(GPIOx,GPIO_Pin);
+}
+
+/**
+  * @brief  Determina um valor para o bit do pino especificado.
+  * @param  GPIOx, onde x pode ser (A..F), para selecionar qual GPIO será utilizado.
+  * @param  GPIO_Pin especifica o pino a ser escrito.
+  * @param  PinState especifica o valor a ser escrito no bit.
+  * 		GPIO_PIN_RESET: escreve 0 no bit
+  * 		GPIO_PIN_SET: escreve 1
+  * @retval None.
+  */
+void write_pin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin,GPIO_PinState PinState){
+	HAL_GPIO_WritePin(GPIOx,GPIO_Pin,PinState);
+}
+
+/**
+  * @brief  Inverte valor do o bit do pino especificado.
+  * @param  GPIOx, onde x pode ser (A..F), para selecionar qual GPIO será utilizado.
+  * @param  GPIO_Pin especifica o pino a ser invertido.
+  * @retval None.
+  */
+void toggle_pin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin){
+	HAL_GPIO_TogglePin(GPIOx,GPIO_Pin);
+}
+
+/**
+  * @brief  Gera um delay preciso em milisegundos.
+  * @param  Delay especifica o tempo de delay, em milisegundos.
+  * @retval None.
+  */
+void delay(uint32_t Delay){
+	HAL_Delay(Delay);
+}
+
+/**
   * @brief  A função repete a leitura do pino de entrada, mantendo um pino de
   * 		saída em estado HIGH, até que haja uma elevação do nível lógico do
   * 		sinal de LOW para HIGH na entrada, invertendo o nível lógico no pino de saída.
@@ -85,15 +137,15 @@ void inputTC(GPIO_TypeDef* GPIOin, uint16_t GPIO_Pin_in, GPIO_TypeDef* GPIOout, 
 	initOutput(GPIOout,GPIO_Pin_out);
 
 	//Rotina do teste de verificação da tensão de operaçãodo pino de input
-	while(HAL_GPIO_ReadPin(GPIOin, GPIO_Pin_in) == 0)
+	while(read_pin(GPIOin, GPIO_Pin_in) == 0)
 	{
-		HAL_GPIO_WritePin(GPIOout, GPIO_Pin_out, GPIO_PIN_SET);
+		write_pin(GPIOout, GPIO_Pin_out, GPIO_PIN_SET);
 	}
-	HAL_GPIO_WritePin(GPIOout, GPIO_Pin_out, GPIO_PIN_RESET); //O teste não denota um valor exato da tensão mínima de operação do pino.
+	write_pin(GPIOout, GPIO_Pin_out, GPIO_PIN_RESET); //O teste não denota um valor exato da tensão mínima de operação do pino.
 
 	//Desativação dos pinos
-	HAL_GPIO_DeInit(GPIOin, GPIO_Pin_in);
-	HAL_GPIO_DeInit(GPIOout, GPIO_Pin_out);
+	DeInit(GPIOin, GPIO_Pin_in);
+	DeInit(GPIOout, GPIO_Pin_out);
 }
 
 /**
@@ -111,15 +163,15 @@ void outputTC(GPIO_TypeDef* GPIOout, uint16_t GPIO_Pin_out, int logic)
 
 	//Quando o parâmetro "logic" for igual a 1, o teste realizado será da medição em nível lógico alto.
 	if(logic == 1)
-		HAL_GPIO_WritePin(GPIOout, GPIO_Pin_out, GPIO_PIN_SET);
+		write_pin(GPIOout, GPIO_Pin_out, GPIO_PIN_SET);
 	//Quando o parâmetro "logic" for igual a 0, o teste realizado será da medição em nível lógico baixo.
 	else if(logic == 0)
-		HAL_GPIO_WritePin(GPIOout, GPIO_Pin_out, GPIO_PIN_RESET);
+		write_pin(GPIOout, GPIO_Pin_out, GPIO_PIN_RESET);
 
-	HAL_Delay(5000);
+	delay(5000);
 
 	//Desativação do pino
-	HAL_GPIO_DeInit(GPIOout, GPIO_Pin_out);
+	DeInit(GPIOout, GPIO_Pin_out);
 }
 
 /**
@@ -139,17 +191,17 @@ void testeInput(GPIO_TypeDef* GPIOin, uint16_t GPIO_Pin_in, GPIO_TypeDef* GPIOou
 	/*O laço faz 1000 iterações, verifica o estado lógico da entrada e gera o sinal de saída*/
 	for(int i = 0; i < 1000; i++)
 	{
-		if(HAL_GPIO_ReadPin(GPIOin, GPIO_Pin_in) == 1)
+		if(read_pin(GPIOin, GPIO_Pin_in) == 1)
 			/*Quando o sinal de entrada estiver em HIGH o valor na saída também é HIGH*/
-			HAL_GPIO_WritePin(GPIOout, GPIO_Pin_out, GPIO_PIN_SET);
-		else if(HAL_GPIO_ReadPin(GPIOin, GPIO_Pin_in) == 0)
+			write_pin(GPIOout, GPIO_Pin_out, GPIO_PIN_SET);
+		else if(read_pin(GPIOin, GPIO_Pin_in) == 0)
 			/*Quando o sinal de entrada estiver em LOW o valor na saída também é LOW*/
-			HAL_GPIO_WritePin(GPIOout, GPIO_Pin_out, GPIO_PIN_RESET);
+			write_pin(GPIOout, GPIO_Pin_out, GPIO_PIN_RESET);
 	}
 
 	/*Desativação dos GPIOs*/
-	HAL_GPIO_DeInit(GPIOin, GPIO_Pin_in);
-	HAL_GPIO_DeInit(GPIOout, GPIO_Pin_out);
+	DeInit(GPIOin, GPIO_Pin_in);
+	DeInit(GPIOout, GPIO_Pin_out);
 }
 
 /**
@@ -165,10 +217,10 @@ void testeOutput(GPIO_TypeDef* GPIOout, uint16_t GPIO_Pin_out)
 
 	/*O laço faz 1000 iterações, e varia o estado lógico do pino de saída*/
 	for(int i = 0; i < 1000; i++)
-		HAL_GPIO_TogglePin(GPIOout, GPIO_Pin_out);
+		toggle_pin(GPIOout, GPIO_Pin_out);
 
 	/*Desativação dos GPIOs*/
-	HAL_GPIO_DeInit(GPIOout, GPIO_Pin_out);
+	DeInit(GPIOout, GPIO_Pin_out);
 }
 
 
