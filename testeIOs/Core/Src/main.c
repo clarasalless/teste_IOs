@@ -72,7 +72,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  initInput(GPIOC,GPIO_PIN_13);
+  initOutput(GPIOA,GPIO_PIN_5);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -85,20 +86,24 @@ int main(void)
   /* USER CODE BEGIN 2 */
   	CLKEnable(GPIOA);
 
-  	char test = "input20";
+  	int test;
+  	test = 1; //input19
+  	//test = 2; //output19
+  	//test = 3; //input20
+  	//test = 4; //output20
 
   	switch(test){
-  		case "input19":
-  			inputTC(GPIOin, GPIO_PIN_in, GPIOout, GPIO_PIN_out);
+  		case 1:
+  			inputTC(GPIOC, GPIO_PIN_13, GPIOA, GPIO_PIN_5);
   			break;
-  		case "output19":
-  			outputTC(GPIOout, GPIO_PIN_out, EstadoLogico);
+  		case 2:
+  			outputTC(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
   			break;
-  		case "input20":
-  			testeInput(GPIOin, GPIO_PIN_in, GPIOout, GPIO_PIN_out);
+  		case 3:
+  			testeInput(GPIOC, GPIO_PIN_13, GPIOA, GPIO_PIN_5);
   			break;
-  		case "output20":
-  			testeOutput(GPIOout, GPIO_PIN_out);
+  		case 4:
+  			testeOutput(GPIOA, GPIO_PIN_5);
   	}
 
   /* USER CODE END 2 */
