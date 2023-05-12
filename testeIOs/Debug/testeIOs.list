@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 13 .debug_info   0000452b  00000000  00000000  0002003c  2**0
+ 13 .debug_info   00004556  00000000  00000000  0002003c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00000f9a  00000000  00000000  00024567  2**0
+ 14 .debug_abbrev 00000faf  00000000  00000000  00024592  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00000450  00000000  00000000  00025508  2**3
+ 15 .debug_aranges 00000450  00000000  00000000  00025548  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_ranges 000003b8  00000000  00000000  00025958  2**3
+ 16 .debug_ranges 000003b8  00000000  00000000  00025998  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  0001e721  00000000  00000000  00025d10  2**0
+ 17 .debug_macro  0001e721  00000000  00000000  00025d50  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000598c  00000000  00000000  00044431  2**0
+ 18 .debug_line   0000598c  00000000  00000000  00044471  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000baae1  00000000  00000000  00049dbd  2**0
+ 19 .debug_str    000bab03  00000000  00000000  00049dfd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000050  00000000  00000000  0010489e  2**0
+ 20 .comment      00000050  00000000  00000000  00104900  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00000f3c  00000000  00000000  001048f0  2**2
+ 21 .debug_frame  00000f3c  00000000  00000000  00104950  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -119,26 +119,26 @@ int main(void)
  80001f6:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000
  80001fa:	f000 f8dd 	bl	80003b8 <CLKEnable>
 
-  	int test;
-  	test = 1; //input19
- 80001fe:	2301      	movs	r3, #1
- 8000200:	607b      	str	r3, [r7, #4]
-  	//test = 2; //output19
-  	//test = 3; //input20
-  	//test = 4; //output20
+  	enum test test;
+  	test = input19;
+ 80001fe:	2300      	movs	r3, #0
+ 8000200:	71fb      	strb	r3, [r7, #7]
+  	//test = output19;
+  	//test = input20;
+  	//test = output20;
 
   	switch(test){
- 8000202:	687b      	ldr	r3, [r7, #4]
- 8000204:	3b01      	subs	r3, #1
- 8000206:	2b03      	cmp	r3, #3
- 8000208:	d828      	bhi.n	800025c <main+0x88>
- 800020a:	a201      	add	r2, pc, #4	; (adr r2, 8000210 <main+0x3c>)
- 800020c:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 8000202:	79fb      	ldrb	r3, [r7, #7]
+ 8000204:	2b03      	cmp	r3, #3
+ 8000206:	d829      	bhi.n	800025c <main+0x88>
+ 8000208:	a201      	add	r2, pc, #4	; (adr r2, 8000210 <main+0x3c>)
+ 800020a:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+ 800020e:	bf00      	nop
  8000210:	08000221 	.word	0x08000221
  8000214:	08000233 	.word	0x08000233
  8000218:	08000241 	.word	0x08000241
  800021c:	08000253 	.word	0x08000253
-  		case 1:
+  		case input19:
   			inputTC(GPIOC, GPIO_PIN_13, GPIOA, GPIO_PIN_5);
  8000220:	2320      	movs	r3, #32
  8000222:	f04f 4290 	mov.w	r2, #1207959552	; 0x48000000
@@ -147,7 +147,7 @@ int main(void)
  800022c:	f000 f9af 	bl	800058e <inputTC>
   			break;
  8000230:	e014      	b.n	800025c <main+0x88>
-  		case 2:
+  		case output19:
   			outputTC(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
  8000232:	2201      	movs	r2, #1
  8000234:	2120      	movs	r1, #32
@@ -155,7 +155,7 @@ int main(void)
  800023a:	f000 f9df 	bl	80005fc <outputTC>
   			break;
  800023e:	e00d      	b.n	800025c <main+0x88>
-  		case 3:
+  		case input20:
   			testeInput(GPIOC, GPIO_PIN_13, GPIOA, GPIO_PIN_5);
  8000240:	2320      	movs	r3, #32
  8000242:	f04f 4290 	mov.w	r2, #1207959552	; 0x48000000
@@ -164,7 +164,7 @@ int main(void)
  800024c:	f000 fa02 	bl	8000654 <testeInput>
   			break;
  8000250:	e004      	b.n	800025c <main+0x88>
-  		case 4:
+  		case output20:
   			testeOutput(GPIOA, GPIO_PIN_5);
  8000252:	2120      	movs	r1, #32
  8000254:	f04f 4090 	mov.w	r0, #1207959552	; 0x48000000

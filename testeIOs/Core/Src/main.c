@@ -26,7 +26,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+enum test {input19,output19,input20,output20};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -86,23 +86,23 @@ int main(void)
   /* USER CODE BEGIN 2 */
   	CLKEnable(GPIOA);
 
-  	int test;
-  	test = 1; //input19
-  	//test = 2; //output19
-  	//test = 3; //input20
-  	//test = 4; //output20
+  	enum test test;
+  	test = input19;
+  	//test = output19;
+  	//test = input20;
+  	//test = output20;
 
   	switch(test){
-  		case 1:
+  		case input19:
   			inputTC(GPIOC, GPIO_PIN_13, GPIOA, GPIO_PIN_5);
   			break;
-  		case 2:
+  		case output19:
   			outputTC(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
   			break;
-  		case 3:
+  		case input20:
   			testeInput(GPIOC, GPIO_PIN_13, GPIOA, GPIO_PIN_5);
   			break;
-  		case 4:
+  		case output20:
   			testeOutput(GPIOA, GPIO_PIN_5);
   	}
 
