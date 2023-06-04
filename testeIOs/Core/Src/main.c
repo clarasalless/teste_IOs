@@ -26,7 +26,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-enum test {input19,output19,input20,output20};
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -86,7 +86,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   	CLKEnable(GPIOA);
 
-  	enum test test;
+  	test_state test;
   	test = input19;
   	//test = output19;
   	//test = input20;

@@ -7,6 +7,14 @@
   ******************************************************************************
   */
 
+/* Typedef ------------------------------------------------------------------*/
+typedef enum{
+	input19 = 1,
+	output19,
+	input20,
+	output20
+}test_state;
+
 /* Protótipos das funções ------------------------------------------------------------------*/
 void CLKEnable(GPIO_TypeDef* GPIOx);
 void initOutput(GPIO_TypeDef* GPIOout, uint16_t GPIO_Pin_out);
